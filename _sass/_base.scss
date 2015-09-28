@@ -1,0 +1,55 @@
+/**
+ * Reset
+ */
+body, h1, h2, h3, h4, h5, h6,
+p, a, blockquote, pre, hr,
+dl, dd, ol, ul, figure {
+    margin: 0;
+    padding: 0;
+}
+a{
+    text-decoration: none;
+}
+/**
+ * Basic styling
+ */
+body {
+    background: $black;
+    font-family: $body-font;
+    font-size: $base-font-size;
+    line-height: $base-line-height;
+    font-weight: 300;
+    -webkit-text-size-adjust: 100%;
+}
+
+/**
+ * Images
+ */
+img {
+    max-width: 100%;
+    vertical-align: middle;
+}
+
+/**
+ * Container
+ */
+.container {
+    max-width: 100%;
+    @extend %clearfix;
+}
+
+/**
+ * Clearfix
+ */
+%clearfix {
+
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+
+
+
