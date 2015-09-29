@@ -1,6 +1,6 @@
 ---
-layout: page
-title: Visit Us
+layout: pages
+title: Visit
 permalink: /visit/
 ---
 

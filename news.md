@@ -1,6 +1,6 @@
 ---
-layout: page
-title: News & Media
+layout: pages
+title: News
 permalink: /news/
 ---
 
