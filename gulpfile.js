@@ -10,7 +10,9 @@ var autoprefix   = require('gulp-autoprefixer');     // prefix any css with low 
 var combinemq    = require('gulp-combine-media-queries');       // prefix any css with low support
 var jekyll       = require('gulp-jekyll');      	 // prefix any css with low support
 var runSequence  = require('run-sequence');       	 // prefix any css with low support
-var frontMatter = require('gulp-front-matter');
+var frontMatter  = require('gulp-front-matter');
+var concat       = require('gulp-concat');
+var uglify       = require('gulp-uglify');
 
 gulp.task('css', function(){
 													  // prepare css code
@@ -33,9 +35,17 @@ gulp.task('css', function(){
 	return stream;
 });
 
+gulp.task('js', function(){
+    return gulp.src(['js/main.js'])
+       // .pipe(concat('concat.js'))   // Add if multiple js files
+        .pipe(rename('main.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('_site/js/'));
+});
+
  gulp.task('jekyll', function (gulpCallBack){
      var spawn = require('child_process').spawn;
-     var jekyll = spawn('jekyll', ['build'], {stdio: 'inherit'});
+     var jekyll = spawn('jekyll.bat', ['build'], {stdio: 'inherit'});
  
      jekyll.on('exit', function(code) {
          gulpCallBack(code === 0 ? null : 'ERROR: Jekyll process exited with code: '+code);
@@ -45,14 +55,17 @@ gulp.task('css', function(){
 
 gulp.task('watch', ['build'], function(){
 	gulp.watch(['css/main.scss', '_sass/*.scss'], ['css']);   // watch for changes and run the css task
+	gulp.watch(['js/main.js', 'js/*.js'], ['js']);
 	gulp.watch(['*.{markdown,md}', '_layouts/*'], ['build']);
 });
 
 gulp.task('build', function(callback) {
   runSequence('jekyll',
+  			  'js',
               'css',
               callback);
 });
 
+gulp.task('default', ['js'], function(){});
 
 gulp.task('default', ['build']);
